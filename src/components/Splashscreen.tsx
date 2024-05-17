@@ -36,7 +36,7 @@ export default function SplashScreen() {
       initial="visible"
       //   animate="visible"
       exit="exit"
-      transition={{ ease: "backInOut", duration: 1 }}
+      transition={{ ease: "linear", duration: 1 }}
     >
       <motion.span
         initial="hidden"
