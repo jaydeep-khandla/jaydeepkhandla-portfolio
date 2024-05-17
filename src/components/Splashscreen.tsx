@@ -6,7 +6,7 @@ import { exit } from "process";
 const splashScreenVariants = {
   hidden: { translateY: 1000 },
   visible: { opacity: 1, translateY: 0 },
-  exit: { translateY: -1000 },
+  exit: { translateY: -1000, opacity: 0},
 };
 
 const spanVariants = (delay: number) => {
