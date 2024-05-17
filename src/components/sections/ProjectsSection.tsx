@@ -18,7 +18,7 @@ const projects = [
     urlTitle: "🔗Github/JDX-Online-Compiler",
     href: "https://github.com/JD-IO3/JDX-Online-Compiler",
     tech: [
-      "Rect.js",
+      "React.js",
       "Node.js",
       "Express.js",
       "Socket.io",
