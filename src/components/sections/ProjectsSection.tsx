@@ -33,7 +33,7 @@ const projects = [
     urlTitle: "🔗Github/Video-Conferencing-WebApp",
     href: "https://github.com/JD-IO3/Video-Conferencing-WebApp",
     tech: [
-      "Rect.js",
+      "React.js",
       "Node.js",
       "Express.js",
       "Socket.io",
