@@ -1,6 +1,4 @@
 "use client";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { useEffect, useState } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -63,8 +61,6 @@ export default function RootLayout({
             trailingSpeed={8}
           />
           {isLoading ? <SplashScreen key="splash" /> : <>{children}</>}
-          <Analytics />
-          {/* <SpeedInsights /> */}
         </AnimatePresence>
       </body>
     </html>
