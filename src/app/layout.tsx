@@ -63,8 +63,8 @@ export default function RootLayout({
             trailingSpeed={8}
           />
           {isLoading ? <SplashScreen key="splash" /> : <>{children}</>}
-          {/* <Analytics />
-          <SpeedInsights /> */}
+          <Analytics />
+          {/* <SpeedInsights /> */}
         </AnimatePresence>
       </body>
     </html>
