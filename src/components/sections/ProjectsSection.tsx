@@ -16,7 +16,7 @@ const projects = [
     description:
       "JDX Online Compiler is a collaborative coding platform aimed at providing an immersive coding experience.",
     urlTitle: "🔗Github/JDX-Online-Compiler",
-    href: "https://github.com/jaydeep-khandlaJD-IO3/JDX-Online-Compiler",
+    href: "https://github.com/jaydeep-khandla/JDX-Online-Compiler",
     tech: [
       "React.js",
       "Node.js",
