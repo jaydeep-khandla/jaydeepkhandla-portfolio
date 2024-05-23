@@ -40,7 +40,7 @@ const Toast = ({
       animate="visible"
       variants={fadeOut}
       transition={{ ease: "backInOut", duration: 0.8 }}
-      className="relative flex justify-between items-center border-2 border-white p-[1em] text-white rounded-lg"
+      className="relative flex justify-between items-center border-2 border-white p-[1em] backdrop-blur-xl text-white rounded-lg"
       role="alert"
     >
       <div className="flex gap-[1em] items-start">

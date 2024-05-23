@@ -6,7 +6,7 @@ import { exit } from "process";
 const splashScreenVariants = {
   hidden: { translateY: 1000 },
   visible: { opacity: 1, translateY: 0 },
-  exit: { translateY: -1000, opacity: 0},
+  exit: { translateY: -1000, opacity: 1},
 };
 
 const spanVariants = (delay: number) => {
@@ -31,7 +31,7 @@ const spanVariants = (delay: number) => {
 export default function SplashScreen() {
   return (
     <motion.div
-      className="flex justify-center items-center flex-col lg:flex-row gap-2 h-screen w-full bg-white text-black"
+      className="flex justify-center items-center flex-col lg:flex-row text-left gap-2 h-screen w-full bg-white text-black"
       variants={splashScreenVariants}
       initial="visible"
       //   animate="visible"

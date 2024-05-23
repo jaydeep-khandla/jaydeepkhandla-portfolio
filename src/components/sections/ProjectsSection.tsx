@@ -16,7 +16,7 @@ const projects = [
     description:
       "JDX Online Compiler is a collaborative coding platform aimed at providing an immersive coding experience.",
     urlTitle: "🔗Github/JDX-Online-Compiler",
-    href: "https://github.com/JD-IO3/JDX-Online-Compiler",
+    href: "https://github.com/jaydeep-khandlaJD-IO3/JDX-Online-Compiler",
     tech: [
       "React.js",
       "Node.js",
@@ -31,7 +31,7 @@ const projects = [
     description:
       "ZEPT is facilitates seamless video and audio communication, in-meeting chat, and file sharing among users.",
     urlTitle: "🔗Github/Video-Conferencing-WebApp",
-    href: "https://github.com/JD-IO3/Video-Conferencing-WebApp",
+    href: "https://github.com/jaydeep-khandla/Video-Conferencing-WebApp",
     tech: [
       "React.js",
       "Node.js",
@@ -47,7 +47,7 @@ const projects = [
     description:
       "KrushiAadhar is a Digital Identity System for farmers, aimed at providing a unique identity to each farmer.",
     urlTitle: "🔗Github/KrushiAadhar",
-    href: "https://github.com/JD-IO3/KrushiAadhar-UISF",
+    href: "https://github.com/jaydeep-khandla/KrushiAadhar-UISF",
     tech: ["html5", "css3", "javascript", "php", "java", "Android"],
     srcImg: KrushiaadharImg
   },
@@ -56,7 +56,7 @@ const projects = [
     description:
       "BrainHunt is a coding competition platform that I had developed for our event at college's Tech-Fest.",
     urlTitle: "🔗Github/x-brain-hunt",
-    href: "https://github.com/JD-IO3/x-brain-hunt",
+    href: "https://github.com/jaydeep-khandla/x-brain-hunt",
     tech: ["html5", "css3", "javascript", "Github Pages"],
     srcImg: BrainhuntImg
   },
@@ -65,7 +65,7 @@ const projects = [
     description:
       "Developing a Hub for small tech projects to support learning and skills with an organized Repository.",
     urlTitle: "🔗Github/Projects-Pathshala",
-    href: "https://github.com/JD-IO3/Projects-PathShala",
+    href: "https://github.com/jaydeep-khandla/Projects-PathShala",
     tech: ["Python", "numpy", "pandas", "tkinter", "etc..."],
     srcImg: PropathshalaImg
   },
