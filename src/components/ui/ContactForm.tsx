@@ -9,6 +9,7 @@ import InstagramLogo from "@/app/images/brand-instagram.svg";
 import DownloadLogo from "@/app/images/download.svg";
 import { sendContactForm } from "@/app/libs/api";
 import { fadeIn, scaleUp } from "@/utils/variants";
+import { GITHUB_URL, LINKEDIN_URL, RESUME_URL, INSTAGRAM_URL } from "@/app/libs/data";
 
 const initValues: {
   name: string;
@@ -203,10 +204,10 @@ const ContactForm = ({ showToast }: { showToast: Function }) => {
             Want to connect on Social Media?
           </h3>
           <div className="flex gap-8 w-fit my-3">
-            <a href="https://github.com/JD-IO3/" target="_blank">
+            <a href={GITHUB_URL} target="_blank">
               <Image src={GithubLogo} alt="GH" width={45} height={45} />
             </a>
-            <a href="https://www.linkedin.com/in/jaydeep-khandla" target="_blank">
+            <a href={LINKEDIN_URL} target="_blank">
               <Image src={LinkedinLogo} alt="GH" width={45} height={45} />
             </a>
             {/* <motion.a href="" initial="hidden" animate="visible">
@@ -216,7 +217,7 @@ const ContactForm = ({ showToast }: { showToast: Function }) => {
           <h3>
             Check out my art{" "}
             <a
-              href="https://www.instagram.com/the_a.r.t_company?igsh=MWRmem80ZHhvcTdxNg=="
+              href={INSTAGRAM_URL}
               target="_blank"
               className="border-white border-b-2 font-mono tracking-tighter"
             >
@@ -231,7 +232,7 @@ const ContactForm = ({ showToast }: { showToast: Function }) => {
             className=" w-fit flex items-center justify-center gap-2 my-3 px-3 py-2 text-lg font-fira bg-transparent border-2 border-white"
           >
             <a
-              href="https://drive.google.com/file/d/1jNUbba1CjhLORC675tfKhyAHwXkTYwBx/view?usp=drivesdk"
+              href={RESUME_URL}
               target="_blank"
             >
               Resume

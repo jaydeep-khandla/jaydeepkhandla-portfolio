@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import GithubLogo from "@/app/images/brand-github.svg";
 import LinkedinLogo from "@/app/images/brand-linkedin.svg";
-import InstagramLogo from "@/app/images/brand-instagram.svg";
 import DownloadLogo from "@/app/images/download.svg";
+import { GITHUB_URL, LINKEDIN_URL, RESUME_URL } from "@/app/libs/data";
 
 const headerVariants = (delay?: number) => {
   return {
@@ -35,14 +35,14 @@ export default function Header() {
         whileHover={{ scale: 1.1 }}
         className="flex items-center justify-center gap-2 px-2 py-1 font-fira bg-transparent border-2 border-white"
       >
-        <a href="https://drive.google.com/file/d/1jNUbba1CjhLORC675tfKhyAHwXkTYwBx/view?usp=drivesdk" target="_blank">Resume</a>
+        <a href={RESUME_URL} target="_blank">Resume</a>
         <Image src={DownloadLogo} alt="Download" width={20} height={20} />
       </motion.button>
       <div className="flex gap-4 w-fit">
-        <motion.a href="https://github.com/JD-IO3/" target="_blank" initial='hidden' animate='visible' variants={headerVariants()}>
+        <motion.a href={GITHUB_URL} target="_blank" initial='hidden' animate='visible' variants={headerVariants()}>
           <Image src={GithubLogo} alt="GH" width={30} height={30} />
         </motion.a>
-        <motion.a href="https://www.linkedin.com/in/jaydeep-khandla" target="_blank" initial='hidden' animate='visible' variants={headerVariants(0.3)}>
+        <motion.a href={LINKEDIN_URL} target="_blank" initial='hidden' animate='visible' variants={headerVariants(0.3)}>
           <Image src={LinkedinLogo} alt="GH" width={30} height={30} />
         </motion.a>
         {/* <motion.a href="" initial='hidden' animate='visible' variants={headerVariants(0.6)}>

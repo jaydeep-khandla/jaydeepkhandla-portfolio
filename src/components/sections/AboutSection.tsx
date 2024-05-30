@@ -4,22 +4,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { scaleUp, fadeIn } from "@/utils/variants";
 import DownloadLogo from "@/app/images/download.svg";
+import { RESUME_URL, INSTAGRAM_URL, frontendTech, uiTech, backendTech, toolsTech } from "@/app/libs/data";
 
-const frontendTech = [
-  "JavaScript(ES6+)",
-  "React.js",
-  "Next.js",
-  "HTML5",
-  "CSS3",
-];
-const uiTech = ["Bootstrap", "TailwindCSS", "Material-UI"];
-const backendTech = ["Typscript", "Node.js", "Express.js", "Python", "MongoDB", "MySQL"];
-const toolsTech = [
-  "Git/Github",
-  "Postman",
-  "Socket.io",
-  "mediasoup",
-];
+
 // initial="hidden" whileInView={"visible"} variants={scaleUp(0.5)} viewport={{once:false, amount:0.7}}
 
 export default function AboutSection() {
@@ -42,7 +29,7 @@ export default function AboutSection() {
           to enhance user experience and introduce innovative features.
           <br />
           <br />
-          I also have some sketching skills. Want to check out my sketches? <a href="https://www.instagram.com/the_a.r.t_company?igsh=MWRmem80ZHhvcTdxNg==" target="_blank" className="border-b-2 font-mono border-white">Click Here</a>
+          I also have some sketching skills. Want to check out my sketches? <a href={INSTAGRAM_URL} target="_blank" className="border-b-2 font-mono border-white">Click Here</a>
           <br />
           <br />
           Let{"'"}s explore what we can create together!
@@ -56,7 +43,7 @@ export default function AboutSection() {
             className="flex items-center justify-center gap-2 px-2 py-1 text-base font-fira bg-transparent border-2 border-white"
           >
             <a
-              href="https://drive.google.com/file/d/1jNUbba1CjhLORC675tfKhyAHwXkTYwBx/view?usp=drivesdk"
+              href={RESUME_URL}
               target="_blank"
             >
               Resume
