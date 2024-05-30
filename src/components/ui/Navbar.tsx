@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Link } from "react-scroll";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 
 const navbarVariants = {
   hidden: {
@@ -38,6 +38,7 @@ const hoverVariants = {
 };
 
 export default function Navbar() {
+
   return (
     <motion.nav
       initial="hidden"
@@ -62,6 +63,7 @@ export default function Navbar() {
           offset={0}
           duration={1500}
           className="text-white h-full w-full px-2 py-2 hover:text-black"
+          activeClass="active"
         >
           Home
         </Link>
@@ -82,6 +84,7 @@ export default function Navbar() {
           offset={10}
           duration={1500}
           className="text-white h-full w-full px-2 py-2 hover:text-black"
+          activeClass="active"
         >
           Projects
         </Link>
@@ -103,6 +106,7 @@ export default function Navbar() {
           offset={0}
           duration={1500}
           className="text-white h-full w-full px-2 py-2 hover:text-black"
+          activeClass="active"
         >
           About
         </Link>
@@ -124,6 +128,7 @@ export default function Navbar() {
           offset={0}
           duration={1500}
           className="text-white h-full w-full px-2 py-2 hover:text-black"
+          activeClass="active"
         >
           Contact
         </Link>
