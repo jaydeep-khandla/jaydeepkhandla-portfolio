@@ -17,6 +17,20 @@ const INSTAGRAM_URL: string =
 //? Projects Data
 const projects = [
   {
+    title: "AlgoVis-Algorithm-Visualizer",
+    description:
+      "AlgoVis is an Algorithm Visualizer that helps in understanding the working of various algorithms visually.",
+    urlTitle: "🔗Demo/AlgoVis",
+    href: "https://visalgo.vercel.app/",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Aceternity UI",
+      "Nodemailer"
+    ],
+    srcImg: JdxImg,
+  },
+  {
     title: "JDX-Online-Collaborative-Compiler",
     description:
       "JDX Online Compiler is a collaborative coding platform aimed at providing an immersive coding experience.",
