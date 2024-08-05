@@ -1,3 +1,4 @@
+import VisAlgoImg from "@/app/images/visalgo-ss.png";
 import JdxImg from "@/app/images/jdx-ss.png";
 import ZeptImg from "@/app/images/zept-ss.png";
 import KrushiaadharImg from "@/app/images/krushiaadhar-ss.png";
@@ -28,7 +29,7 @@ const projects = [
       "Aceternity UI",
       "Nodemailer"
     ],
-    srcImg: JdxImg,
+    srcImg: VisAlgoImg,
   },
   {
     title: "JDX-Online-Collaborative-Compiler",
