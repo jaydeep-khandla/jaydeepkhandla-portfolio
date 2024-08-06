@@ -10,7 +10,7 @@ const GITHUB_URL: string = "https://github.com/jaydeep-khandla/";
 const LINKEDIN_URL: string = "https://www.linkedin.com/in/jaydeep-khandla";
 
 const RESUME_URL: string =
-  "https://drive.google.com/file/d/1Bpxuo90eMNHcN2abSlXAykv3pNruJrr5/view?usp=sharing";
+  "https://drive.google.com/file/d/1gFMSd3fF8U-N0sf7S_7fO1nUhs6gQNCu/view?usp=sharing";
 
 const INSTAGRAM_URL: string =
   "https://www.instagram.com/the_a.r.t_company?igsh=MWRmem80ZHhvcTdxNg==";
