@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface DashboardStats {
@@ -20,11 +20,7 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) {
@@ -61,7 +57,11 @@ export default function AdminDashboard() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    fetchStats();
+  }, [fetchStats]);
 
   return (
     <div>
@@ -116,8 +116,8 @@ export default function AdminDashboard() {
         <h2 className="text-2xl font-bold text-white mb-4">Quick Start</h2>
         <div className="space-y-3 text-zinc-300">
           <p>
-            ✅ <strong>MongoDB Connection:</strong> You'll need to set up your
-            MongoDB Atlas connection string in the{' '}
+            ✅ <strong>MongoDB Connection:</strong> You&apos;ll need to set up
+            your MongoDB Atlas connection string in the{' '}
             <code className="bg-zinc-800 px-2 py-1 rounded">.env.local</code>{' '}
             file
           </p>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface AboutForm {
@@ -34,11 +34,7 @@ export default function AdminAboutPage() {
   const [isNew, setIsNew] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    fetchAbout();
-  }, []);
-
-  const fetchAbout = async () => {
+  const fetchAbout = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) {
@@ -66,7 +62,11 @@ export default function AdminAboutPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    fetchAbout();
+  }, [fetchAbout]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
