@@ -36,3 +36,15 @@ export async function getAbout() {
     return null;
   }
 }
+
+export async function getExperience() {
+  try {
+    const response = await fetch(`${API_BASE}/api/experience`);
+    if (!response.ok) throw new Error('Failed to fetch experience');
+    const data = await response.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Error fetching experience:', error);
+    return [];
+  }
+}

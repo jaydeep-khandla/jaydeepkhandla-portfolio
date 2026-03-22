@@ -53,10 +53,16 @@ export default function ProtectedAdminLayout({
             📊 Dashboard
           </Link>
           <Link
+            href="/admin/experience"
+            className="block px-4 py-2 rounded-lg text-white hover:bg-zinc-800 transition"
+          >
+            💼 Experience
+          </Link>
+          <Link
             href="/admin/projects"
             className="block px-4 py-2 rounded-lg text-white hover:bg-zinc-800 transition"
           >
-            💼 Projects
+            🚀 Projects
           </Link>
           <Link
             href="/admin/skills"

@@ -1,13 +1,14 @@
-"use client";
-import { useState } from "react";
-import dynamic from "next/dynamic";
-const HomeSection = dynamic(() => import("@/components/sections/HomeSection"));
-const Navbar = dynamic(() => import("@/components/ui/Navbar"));
-import ProjectsSection from "@/components/sections/ProjectsSection";
-import AboutSection from "@/components/sections/AboutSection";
-import ContactSection from "@/components/sections/ContactSection";
-import Footer from "@/components/ui/Footer";
-import ToastList from "@/components/ui/ToastList";
+'use client';
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+const HomeSection = dynamic(() => import('@/components/sections/HomeSection'));
+const Navbar = dynamic(() => import('@/components/ui/Navbar'));
+import ProjectsSection from '@/components/sections/ProjectsSection';
+import AboutSection from '@/components/sections/AboutSection';
+import ExperienceSection from '@/components/sections/ExperienceSection';
+import ContactSection from '@/components/sections/ContactSection';
+import Footer from '@/components/ui/Footer';
+import ToastList from '@/components/ui/ToastList';
 
 type Toast = {
   id: number;
@@ -17,7 +18,7 @@ type Toast = {
 
 export default function Home() {
   const [toasts, setToasts] = useState<Toast[]>([]);
-  const position = "top-right";
+  const position = 'top-right';
 
   const showToast = (message: string, type: string) => {
     const toast: Toast = {
@@ -41,6 +42,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between">
       <Navbar />
       <HomeSection />
+      <ExperienceSection />
       <ProjectsSection />
       <AboutSection />
       <ContactSection showToast={showToast} removeToast={removeToast} />
