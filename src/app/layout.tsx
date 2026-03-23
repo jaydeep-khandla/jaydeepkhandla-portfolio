@@ -1,14 +1,14 @@
-"use client";
-import { useEffect, useState } from "react";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Starfield from "react-starfield";
-import { AnimatePresence } from "framer-motion";
-import "./globals.css";
-import AnimatedCursor from "react-animated-cursor";
-import SplashScreen from "@/components/Splashscreen";
+'use client';
+import { useEffect, useState } from 'react';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import Starfield from 'react-starfield';
+import { AnimatePresence } from 'framer-motion';
+import './globals.css';
+import AnimatedCursor from 'react-animated-cursor';
+import SplashScreen from '@/components/Splashscreen';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -34,7 +34,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>Jaydeep Khandla | Full Stack Developer</title>
-        <meta name="description" content="Jaydeep Khandla | Full Stack Developer" />
+        <meta
+          name="description"
+          content="Jaydeep Khandla | Full Stack Developer"
+        />
       </head>
       <body className={inter.className}>
         <Starfield
@@ -45,22 +48,27 @@ export default function RootLayout({
         />
         <AnimatePresence>
           <AnimatedCursor
+            key="cursor"
             innerSize={8}
             outerSize={35}
             outerScale={2}
             innerStyle={{
-              mixBlendMode: "exclusion",
-              backgroundColor: "rgba(255, 255, 255)",
+              mixBlendMode: 'exclusion',
+              backgroundColor: 'rgba(255, 255, 255)',
             }}
             outerAlpha={0}
             outerStyle={{
-              mixBlendMode: "exclusion",
-              backgroundColor: "rgba(255, 255, 255)",
+              mixBlendMode: 'exclusion',
+              backgroundColor: 'rgba(255, 255, 255)',
             }}
-            clickables={["button", "a"]}
+            clickables={['button', 'a']}
             trailingSpeed={8}
           />
-          {isLoading ? <SplashScreen key="splash" /> : <>{children}</>}
+          {isLoading ? (
+            <SplashScreen key="splash" />
+          ) : (
+            <div key="content">{children}</div>
+          )}
         </AnimatePresence>
       </body>
     </html>

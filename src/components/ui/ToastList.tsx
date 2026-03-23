@@ -1,12 +1,22 @@
-import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import Toast from "../Toast";
+import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import Toast from '../Toast';
 
-const ToastList = ({ data, position, removeToast }: { data: any[], position: string, removeToast: Function }) => {
+const ToastList = ({
+  data,
+  position = 'top-right',
+  removeToast,
+}: {
+  data: any[];
+  position?: string;
+  removeToast: Function;
+}) => {
   const listRef = useRef(null);
 
   const handleScrolling = (el: HTMLElement | null) => {
-    const isTopPosition = ["top-left", "top-right"].includes(position);
+    const isTopPosition = ['top-left', 'top-right'].includes(
+      position || 'top-right',
+    );
     el?.scrollTo(0, el.scrollHeight);
     if (isTopPosition) {
     } else {
@@ -17,7 +27,6 @@ const ToastList = ({ data, position, removeToast }: { data: any[], position: str
   useEffect(() => {
     handleScrolling(listRef.current);
   }, [position, data]);
-
 
   return (
     data.length > 0 && (
@@ -38,13 +47,9 @@ const ToastList = ({ data, position, removeToast }: { data: any[], position: str
   );
 };
 
-ToastList.defaultProps = {
-  position: "top-right",
-};
-
 ToastList.propTypes = {
   data: PropTypes.array.isRequired,
-  position: PropTypes.string.isRequired,
+  position: PropTypes.string,
   removeToast: PropTypes.func.isRequired,
 };
 

@@ -15,8 +15,12 @@ interface Project {
   urlTitle: string;
   href: string;
   tech: string[];
-  srcImg?: any;
-  imageUrl?: string;
+  imageUrl: string;
+  imageAlt: string;
+  featured: boolean;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function ProjectsSection() {
@@ -63,7 +67,9 @@ export default function ProjectsSection() {
               urlTitle={project.urlTitle}
               href={project.href}
               tech={project.tech}
-              srcImg={project.srcImg}
+              srcImg={project.imageUrl}
+              imageAlt={project.imageAlt}
+              featured={project.featured}
             />
           </motion.div>
         ))}

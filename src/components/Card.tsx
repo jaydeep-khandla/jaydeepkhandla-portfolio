@@ -12,13 +12,17 @@ export default function AnimatedPin({
   href,
   tech,
   srcImg,
+  imageAlt,
+  featured,
 }: {
   title: string;
   description: string;
   urlTitle: string;
   href: string;
   tech: string[];
-  srcImg: StaticImageData;
+  srcImg: string | StaticImageData;
+  imageAlt: string;
+  featured: boolean;
 }) {
   return (
     <motion.div
@@ -54,8 +58,14 @@ export default function AnimatedPin({
               ))}
             </span>
           </div>
-          <div className="flex flex-1 w-full rounded-lg bg-zinc-700">
-            <Image alt={title} src={srcImg} className="h-full w-full" />
+          <div className="relative flex flex-1 w-full rounded-lg bg-zinc-700 overflow-hidden">
+            <Image
+              alt={imageAlt}
+              src={srcImg}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover"
+            />
           </div>
         </div>
       </PinContainer>
