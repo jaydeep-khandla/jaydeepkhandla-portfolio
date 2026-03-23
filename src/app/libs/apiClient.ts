@@ -3,7 +3,9 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '';
 
 export async function getProjects() {
   try {
-    const response = await fetch(`${API_BASE}/api/projects`);
+    const response = await fetch(`${API_BASE}/api/projects`, {
+      cache: 'no-store',
+    });
     if (!response.ok) throw new Error('Failed to fetch projects');
     const data = await response.json();
     return data.data || [];
@@ -15,7 +17,9 @@ export async function getProjects() {
 
 export async function getSkills() {
   try {
-    const response = await fetch(`${API_BASE}/api/skills`);
+    const response = await fetch(`${API_BASE}/api/skills`, {
+      cache: 'no-store',
+    });
     if (!response.ok) throw new Error('Failed to fetch skills');
     const data = await response.json();
     return data.data || [];
@@ -27,7 +31,9 @@ export async function getSkills() {
 
 export async function getAbout() {
   try {
-    const response = await fetch(`${API_BASE}/api/about`);
+    const response = await fetch(`${API_BASE}/api/about`, {
+      cache: 'no-store',
+    });
     if (!response.ok) throw new Error('Failed to fetch about section');
     const data = await response.json();
     return data.data || null;
@@ -39,7 +45,9 @@ export async function getAbout() {
 
 export async function getExperience() {
   try {
-    const response = await fetch(`${API_BASE}/api/experience`);
+    const response = await fetch(`${API_BASE}/api/experience`, {
+      cache: 'no-store',
+    });
     if (!response.ok) throw new Error('Failed to fetch experience');
     const data = await response.json();
     return data.data || [];
