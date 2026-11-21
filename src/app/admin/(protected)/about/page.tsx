@@ -1,5 +1,7 @@
 'use client';
 
+import RichEditor from '@/components/RichEditor';
+import RichContent from '@/components/RichContent';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -181,21 +183,10 @@ export default function AdminAboutPage() {
             💡 Tip: Newlines and formatting will be preserved. Use Enter to
             create line breaks.
           </p>
-          <textarea
-            name="bio"
-            value={form.bio}
-            onChange={handleChange}
-            required
-            rows={8}
-            spellCheck="true"
-            className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-white transition font-mono text-sm"
-            placeholder="Write about yourself here. You can use multiple lines&#10;and all formatting will be preserved&#10;on the display page."
-          />
+          <RichEditor label="Biography" value={form.bio} onChange={html => setForm(previous => ({ ...previous, bio: html }))} />
           <div className="mt-2 p-3 bg-zinc-900 rounded-lg border border-zinc-700">
             <p className="text-xs text-zinc-400 mb-2">Preview:</p>
-            <p className="text-sm text-white whitespace-pre-wrap break-words">
-              {form.bio || 'Your text will appear here...'}
-            </p>
+            <RichContent value={form.bio} />
           </div>
         </div>
 

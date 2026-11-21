@@ -1,58 +1,15 @@
-// API endpoints
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || '';
 
-export async function getProjects() {
-  try {
-    const response = await fetch(`${API_BASE}/api/projects`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) throw new Error('Failed to fetch projects');
-    const data = await response.json();
-    return data.data || [];
-  } catch (error) {
-    console.error('Error fetching projects:', error);
-    return [];
-  }
+async function readSection(section: string, optional = false) {
+  const response = await fetch(`${API_BASE}/api/${section}`, { cache: 'no-store' });
+  if (optional && response.status === 404) return null;
+  if (!response.ok) throw new Error(`Unable to load ${section}.`);
+  const result = await response.json();
+  if (!result.success) throw new Error(`Unable to load ${section}.`);
+  return result.data;
 }
 
-export async function getSkills() {
-  try {
-    const response = await fetch(`${API_BASE}/api/skills`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) throw new Error('Failed to fetch skills');
-    const data = await response.json();
-    return data.data || [];
-  } catch (error) {
-    console.error('Error fetching skills:', error);
-    return [];
-  }
-}
-
-export async function getAbout() {
-  try {
-    const response = await fetch(`${API_BASE}/api/about`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) throw new Error('Failed to fetch about section');
-    const data = await response.json();
-    return data.data || null;
-  } catch (error) {
-    console.error('Error fetching about section:', error);
-    return null;
-  }
-}
-
-export async function getExperience() {
-  try {
-    const response = await fetch(`${API_BASE}/api/experience`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) throw new Error('Failed to fetch experience');
-    const data = await response.json();
-    return data.data || [];
-  } catch (error) {
-    console.error('Error fetching experience:', error);
-    return [];
-  }
-}
+export const getProjects = () => readSection('projects');
+export const getSkills = () => readSection('skills');
+export const getExperience = () => readSection('experience');
+export const getAbout = () => readSection('about', true);

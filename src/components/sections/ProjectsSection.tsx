@@ -1,12 +1,10 @@
 'use client';
+import { useReveal } from "../useReveal";
+import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import { fadeIn, scaleUp } from '@/utils/variants';
-import { motion } from 'framer-motion';
-const Card = dynamic(() => import('@/components/Card'), { ssr: false });
+import Card from '@/components/Card';
 import { getProjects } from '@/app/libs/apiClient';
 
-let scale: number[] = [0.2, 0.4, 0.6, 0.2, 0.4];
 
 interface Project {
   _id: string;
@@ -24,44 +22,50 @@ interface Project {
 }
 
 export default function ProjectsSection() {
+  const reveal = useReveal();
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
   const fetchProjects = async () => {
+    setIsLoading(true);
+    setFailed(false);
     try {
       const data = await getProjects();
       setProjects(data);
     } catch (error) {
+      setFailed(true);
       console.error('Error loading projects:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  if (isLoading) {
-    return (
-      <section id="projects" className="h-fit py-10 px-8 lg:px-16">
-        <div className="text-center text-zinc-400">Loading projects...</div>
-      </section>
-    );
-  }
+  const leadIndex = Math.max(
+    0,
+    projects.findIndex((project) => project.featured),
+  );
+  const displayProjects = projects.length
+    ? [projects[leadIndex], ...projects.filter((_, index) => index !== leadIndex)]
+    : [];
 
   return (
-    <section id="projects" className="h-fit py-10 px-8 lg:px-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 !gap-0 m-auto w-fit h-full">
-        {projects.map((project, index) => (
-          <motion.div
-            key={project._id || `project-${index}`}
-            initial="hidden"
-            whileInView={'visible'}
-            variants={scaleUp(scale[index % scale.length])}
-            viewport={{ once: false, amount: 0.1 }}
-          >
+    <section id="projects" className="section">
+      <motion.h2 {...reveal('heading')}>Projects</motion.h2>
+      {isLoading ? (
+        <p>Loading projects...</p>
+      ) : failed ? (
+        <p role="alert">Unable to load projects. <button type="button" className="text-link" onClick={fetchProjects}>Retry</button></p>
+      ) : (
+        <div className="project-grid">
+          {displayProjects.map((project, index) => (
             <Card
+              key={project._id || `project-${index}`}
               title={project.title}
               description={project.description}
               urlTitle={project.urlTitle}
@@ -71,9 +75,9 @@ export default function ProjectsSection() {
               imageAlt={project.imageAlt}
               featured={project.featured}
             />
-          </motion.div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

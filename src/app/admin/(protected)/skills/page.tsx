@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -18,11 +18,7 @@ export default function AdminSkillsPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
-    fetchSkills();
-  }, []);
-
-  const fetchSkills = async () => {
+  const fetchSkills = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) {
@@ -47,7 +43,11 @@ export default function AdminSkillsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    fetchSkills();
+  }, [fetchSkills]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this skill category?'))

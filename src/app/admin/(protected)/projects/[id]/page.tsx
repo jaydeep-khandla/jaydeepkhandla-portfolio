@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import RichEditor from '@/components/RichEditor';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 interface ProjectForm {
@@ -34,32 +35,32 @@ export default function AdminProjectFormPage() {
   const params = useParams();
   const isEdit = params?.id && params.id !== 'new';
 
-  useEffect(() => {
-    if (isEdit) {
-      fetchProject();
-    }
-  }, [isEdit, params?.id]);
-
-  const fetchProject = async () => {
+  const id = params?.id;
+  const fetchProject = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`/api/admin/projects/${params?.id}`, {
+      const response = await fetch(`/api/admin/projects/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setForm({
-          ...data.data,
-          tech: data.data.tech.join(', '),
-        });
-      }
+      if (!response.ok) throw new Error('Unable to load this record');
+      const data = await response.json();
+      setForm({
+        ...data.data,
+        tech: data.data.tech.join(', '),
+      });
     } catch (err) {
       setError((err as Error).message);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (isEdit) {
+      fetchProject();
+    }
+  }, [isEdit, fetchProject]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -156,15 +157,7 @@ export default function AdminProjectFormPage() {
           <label className="block text-white font-medium mb-2">
             Description *
           </label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            required
-            rows={4}
-            className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-white transition"
-            placeholder="Enter project description"
-          />
+          <RichEditor label="Description" value={form.description} onChange={html => setForm(previous => ({ ...previous, description: html }))} />
         </div>
 
         <div>

@@ -19,8 +19,10 @@ export default function AdminDashboard() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const [error, setError] = useState(false);
 
   const fetchStats = useCallback(async () => {
+    setError(false);
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) {
@@ -39,20 +41,20 @@ export default function AdminDashboard() {
         fetch('/api/admin/messages', { headers }),
       ]);
 
-      if (projectsRes.ok && skillsRes.ok && messagesRes.ok) {
-        const projectsData = await projectsRes.json();
-        const skillsData = await skillsRes.json();
-        const messagesData = await messagesRes.json();
+      if (!projectsRes.ok || !skillsRes.ok || !messagesRes.ok) throw new Error('Dashboard request failed');
+      const projectsData = await projectsRes.json();
+      const skillsData = await skillsRes.json();
+      const messagesData = await messagesRes.json();
 
-        setStats({
-          projects: projectsData.data?.length || 0,
-          skills: skillsData.data?.length || 0,
-          messages: messagesData.data?.length || 0,
-          unreadMessages:
-            messagesData.data?.filter((m: any) => !m.isRead).length || 0,
-        });
-      }
+      setStats({
+        projects: projectsData.data?.length || 0,
+        skills: skillsData.data?.length || 0,
+        messages: messagesData.data?.length || 0,
+        unreadMessages:
+          messagesData.data?.filter((m: any) => !m.isRead).length || 0,
+      });
     } catch (error) {
+      setError(true);
       console.error('Error fetching stats:', error);
     } finally {
       setIsLoading(false);
@@ -70,12 +72,12 @@ export default function AdminDashboard() {
         <p className="text-zinc-400">Welcome to your portfolio admin panel</p>
       </div>
 
-      {isLoading ? (
+      {error ? <p role="alert">Unable to load dashboard totals. <button onClick={fetchStats}>Retry</button></p> : isLoading ? (
         <div className="text-white text-center py-12">Loading stats...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6">
-            <div className="text-6xl mb-2">💼</div>
+
             <h3 className="text-zinc-400 text-sm font-medium mb-2">Projects</h3>
             <div className="text-3xl font-bold text-white">
               {stats.projects}
@@ -83,7 +85,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6">
-            <div className="text-6xl mb-2">🎯</div>
+
             <h3 className="text-zinc-400 text-sm font-medium mb-2">
               Skill Categories
             </h3>
@@ -91,7 +93,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6">
-            <div className="text-6xl mb-2">✉️</div>
+
             <h3 className="text-zinc-400 text-sm font-medium mb-2">
               Total Messages
             </h3>
@@ -101,7 +103,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6">
-            <div className="text-6xl mb-2">🔔</div>
+
             <h3 className="text-zinc-400 text-sm font-medium mb-2">
               Unread Messages
             </h3>

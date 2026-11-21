@@ -1,138 +1,35 @@
 "use client";
-import React from "react";
 import { Link } from "react-scroll";
-import { color, motion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 
-const navbarVariants = {
-  hidden: {
-    translateY: 100,
-    opacity: 0,
-  },
-  visible: {
-    translateY: 1,
-    opacity: 1,
-    transition: {
-      ease: "easeInOut",
-      duration: 1,
-      delay: 0.8,
-    },
-  },
-};
-
-const hoverVariants = {
-  hidden: {
-    scale: 0,
-    opacity: 0,
-  },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    backgroundColor: "rgba(255, 255, 255)",
-    color: "rgba(0, 0, 0)",
-    transition: {
-      ease: "easeInOut",
-      duration: 1,
-      delay: 0.8,
-    },
-  },
-};
+const sections = ["Home", "Experience", "Projects", "About", "Contact"];
 
 export default function Navbar() {
-
+  const reduced = useReducedMotion();
   return (
-    <motion.nav
-      initial="hidden"
-      animate="visible"
-      variants={navbarVariants}
-      className="fixed z-[100] h-fit bottom-16 flex w-fit gap-3 backdrop-blur-xl font-fira border-[1px] border-white rounded-md"
-    >
-      <motion.span className = "rounded-md flex h-fit w-fit"
-        whileHover={{
-          backgroundColor: "rgba(255, 255, 255)",
-          transition: {
-            type: "spring", 
-            // ease: "easeInOut",
-            duration: 0.5,
-          },
-        }}
-      >
-        <Link
-          to="home"
-          spy={true}
-          smooth={true}
-          offset={0}
-          duration={1500}
-          className="text-white h-full w-full px-2 py-2 hover:text-black"
-          activeClass="active"
-        >
-          Home
-        </Link>
-      </motion.span>
-      <motion.span className = "rounded-md flex h-fit w-fit"
-        whileHover={{
-          backgroundColor: "rgba(255, 255, 255)",
-          transition: {
-            // ease: "easeInOut",
-            duration: 0.5,
-          },
-        }}
-      >
-        <Link
-          to="projects"
-          spy={true}
-          smooth={true}
-          offset={10}
-          duration={1500}
-          className="text-white h-full w-full px-2 py-2 hover:text-black"
-          activeClass="active"
-        >
-          Projects
-        </Link>
-      </motion.span>
-      <motion.span className = "rounded-md flex h-fit w-fit"
-        whileHover={{
-          backgroundColor: "rgb(255, 255, 255)",
-          transition: {
-            type: "spring",
-            // ease: "linear",
-            duration: 0.5,
-          },
-        }}
-      >
-        <Link
-          to="about"
-          spy={true}
-          smooth={true}
-          offset={0}
-          duration={1500}
-          className="text-white h-full w-full px-2 py-2 hover:text-black"
-          activeClass="active"
-        >
-          About
-        </Link>
-      </motion.span>
-      <motion.span className = "rounded-md flex h-fit w-fit"
-        whileHover={{
-          backgroundColor: "rgba(255, 255, 255)",
-          transition: {
-            type: "spring",
-            // ease: "linear",
-            duration: 0.5,
-          },
-        }}
-      >
-        <Link
-          to="contact"
-          spy={true}
-          smooth={true}
-          offset={0}
-          duration={1500}
-          className="text-white h-full w-full px-2 py-2 hover:text-black"
-          activeClass="active"
-        >
-          Contact
-        </Link>
-      </motion.span>
-    </motion.nav>
+    <header className="portfolio-nav">
+      <a className="wordmark" href="#home">
+        <span>&gt;</span> <b>jd<span>.</span>dev</b><span>_</span>
+      </a>
+      <nav aria-label="Portfolio sections">
+        {sections.map((label) => (
+          <Link
+            key={label}
+            href={"#" + label.toLowerCase()}
+            to={label.toLowerCase()}
+            spy
+            smooth={!reduced}
+            offset={-80}
+            duration={reduced ? 0 : 650}
+            activeClass="selected"
+          >
+            {label}
+          </Link>
+        ))}
+      </nav>
+      <Link className="talk" href="#contact" to="contact" smooth={!reduced} offset={-80} duration={reduced ? 0 : 650}>
+        Let’s talk
+      </Link>
+    </header>
   );
 }

@@ -1,5 +1,7 @@
 'use client';
 
+import RichEditor from '@/components/RichEditor';
+import RichContent from '@/components/RichContent';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -188,8 +190,8 @@ export default function AdminExperiencePage() {
       organizationName: experience.organizationName,
       organizationWebsite: experience.organizationWebsite,
       description: experience.description,
-      startDate: experience.startDate,
-      endDate: experience.endDate,
+      startDate: experience.startDate.slice(0, 10),
+      endDate: experience.endDate?.slice(0, 10) ?? '',
       isCurrentRole: experience.isCurrentRole,
       timeline: experience.timeline,
       verificationDocUrl: experience.verificationDocUrl,
@@ -370,15 +372,7 @@ export default function AdminExperiencePage() {
           <p className="text-sm text-zinc-400 mb-2">
             💡 Tip: Newlines and formatting will be preserved.
           </p>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            required
-            rows={6}
-            className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-white transition font-mono text-sm"
-            placeholder="Describe your responsibilities and achievements..."
-          />
+          <RichEditor label="Description" value={form.description} onChange={html => setForm(previous => ({ ...previous, description: html }))} />
         </div>
 
         <div>
@@ -469,9 +463,7 @@ export default function AdminExperiencePage() {
                   )}
                 </div>
                 <p className="text-sm text-gray-400 mb-2">{exp.timeline}</p>
-                <p className="text-white mb-4 line-clamp-2">
-                  {exp.description}
-                </p>
+                <RichContent value={exp.description} />
                 {exp.verificationDocUrl && (
                   <p className="text-sm text-gray-400 mb-4">
                     📄 {exp.verificationDocName}

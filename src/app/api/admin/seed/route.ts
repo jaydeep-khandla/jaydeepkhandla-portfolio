@@ -1,24 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { seedDatabase } from '@/app/libs/seedDatabase';
 
-/**
- * POST /api/admin/seed
- * Seeds the database with initial data from data.ts
- *
- * SECURITY WARNING: This route should be protected with authentication
- * Currently accessible for development - add auth middleware in production
- */
-export async function POST(request: NextRequest) {
-  try {
-    // Optional: Add authentication check here
-    // const session = await getServerSession();
-    // if (!session) {
-    //   return NextResponse.json(
-    //     { success: false, message: 'Unauthorized' },
-    //     { status: 401 }
-    //   );
-    // }
+import { verifyAdminAuth, adminAuthResponse } from '@/app/libs/authMiddleware';
 
+export async function POST(request: NextRequest) {
+  if (!verifyAdminAuth(request).isValid) return adminAuthResponse();
+  try {
     const result = await seedDatabase();
 
     return NextResponse.json({
@@ -44,12 +31,12 @@ export async function POST(request: NextRequest) {
  * Returns seeding status/documentation
  */
 export async function GET(request: NextRequest) {
+  if (!verifyAdminAuth(request).isValid) return adminAuthResponse();
   return NextResponse.json({
     message: 'Database Seeding Endpoint',
     description: 'POST to this endpoint to seed the database with initial data',
     endpoint: '/api/admin/seed',
     method: 'POST',
     note: 'This will clear existing data and insert fresh data from data.ts',
-    security: 'TODO: Add authentication middleware',
   });
 }

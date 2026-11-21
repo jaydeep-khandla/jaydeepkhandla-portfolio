@@ -1,10 +1,9 @@
 'use client';
+import RichContent from '@/components/RichContent';
+import { useReveal } from "../useReveal";
+import { motion } from "framer-motion";
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { scaleUp, fadeIn } from '@/utils/variants';
-import LinkIcon from '@/app/images/link.svg';
-import Image from 'next/image';
 import { getExperience } from '@/app/libs/apiClient';
 
 interface Experience {
@@ -20,117 +19,76 @@ interface Experience {
 }
 
 export default function ExperienceSection() {
+  const reveal = useReveal();
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     fetchExperiences();
   }, []);
 
   const fetchExperiences = async () => {
+    setIsLoading(true);
+    setFailed(false);
     try {
       const data = await getExperience();
       setExperiences(data);
     } catch (error) {
+      setFailed(true);
       console.error('Error loading experiences:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  if (isLoading) {
-    return (
-      <section
-        id="experience"
-        className="h-fit w-full flex px-8 py-10 my-10 flex-col gap-5 lg:px-16 xl:px-40"
-      >
-        <div className="text-zinc-400">Loading experience...</div>
-      </section>
-    );
-  }
-
-  if (experiences.length === 0) {
-    return null;
-  }
-
   return (
-    <section
-      id="experience"
-      className="h-fit w-full flex px-8 py-10 my-10 flex-col gap-5 lg:px-16 xl:px-40"
-    >
-      <motion.h2
-        initial="hidden"
-        whileInView={'visible'}
-        variants={scaleUp()}
-        viewport={{ once: false, amount: 0.1 }}
-        className="text-left text-5xl font-anton lg:text-6xl"
-      >
-        Experience
-      </motion.h2>
-
-      <div className="space-y-6">
-        {experiences.map((exp, index) => (
-          <motion.div
-            key={exp._id}
-            initial="hidden"
-            whileInView={'visible'}
-            variants={fadeIn('left', 0.1)}
-            viewport={{ once: false, amount: 0.1 }}
-            className="border-l-4 border-white pl-6 py-4"
-          >
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <h3 className="text-2xl font-bold text-white">{exp.role}</h3>
-                <div className="flex items-center gap-2 mt-1">
-                  {exp.organizationWebsite ? (
-                    <a
-                      href={exp.organizationWebsite}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg text-blue-400 hover:text-blue-300 transition flex items-center gap-1"
-                    >
-                      {exp.organizationName}
-                      <Image
-                        src={LinkIcon}
-                        alt="External link"
-                        width={16}
-                        height={16}
-                      />
-                    </a>
-                  ) : (
-                    <p className="text-lg text-gray-300">
-                      {exp.organizationName}
-                    </p>
-                  )}
-                </div>
+    <section id="experience" className="section band">
+      <motion.h2 {...reveal('heading')}>Experience</motion.h2>
+      {isLoading ? (
+        <p>Loading experience...</p>
+      ) : failed ? (
+        <p role="alert">Unable to load experience. <button type="button" className="text-link" onClick={fetchExperiences}>Retry</button></p>
+      ) : experiences.length === 0 ? (
+        <p>No experience entries yet.</p>
+      ) : (
+        <ol className="timeline">
+          {experiences.map((exp, index) => (
+            <motion.li {...reveal('rise', (index % 4) * 0.06)} key={exp._id}>
+              <span className="dates">{exp.timeline}</span>
+              <div className={exp.isCurrentRole ? 'job current' : 'job'}>
+                <motion.i aria-hidden="true" className="timeline-dot" {...reveal('pop')} />
+                <h3>
+                  {exp.role}{' '}
+                  <span>
+                    ·{' '}
+                    {exp.organizationWebsite ? (
+                      <a href={exp.organizationWebsite} target="_blank" rel="noreferrer">
+                        {exp.organizationName} ↗
+                      </a>
+                    ) : (
+                      exp.organizationName
+                    )}
+                  </span>
+                </h3>
+                {exp.isCurrentRole && <span className="chip">Current</span>}
+                <RichContent value={exp.description} />
+                {exp.verificationDocUrl && (
+                  <a
+                    className="text-link"
+                    href={exp.verificationDocUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    📄 {exp.verificationDocName}
+                  </a>
+                )}
               </div>
-              {exp.isCurrentRole && (
-                <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                  Current
-                </span>
-              )}
-            </div>
-
-            <p className="text-sm text-gray-400 mb-4">{exp.timeline}</p>
-
-            <p className="text-white whitespace-pre-wrap break-words mb-4">
-              {exp.description}
-            </p>
-
-            {exp.verificationDocUrl && (
-              <motion.a
-                href={exp.verificationDocUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                className="inline-flex items-center gap-2 px-3 py-1 text-sm border border-white rounded hover:bg-white hover:text-black transition"
-              >
-                📄 {exp.verificationDocName}
-              </motion.a>
-            )}
-          </motion.div>
-        ))}
-      </div>
+            </motion.li>
+          ))}
+        </ol>
+      )}
     </section>
   );
 }

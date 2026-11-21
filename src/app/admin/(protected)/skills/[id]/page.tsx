@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 interface SkillForm {
@@ -22,32 +22,32 @@ export default function AdminSkillFormPage() {
   const params = useParams();
   const isEdit = params?.id && params.id !== 'new';
 
-  useEffect(() => {
-    if (isEdit) {
-      fetchSkill();
-    }
-  }, [isEdit, params?.id]);
-
-  const fetchSkill = async () => {
+  const id = params?.id;
+  const fetchSkill = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`/api/admin/skills/${params?.id}`, {
+      const response = await fetch(`/api/admin/skills/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setForm({
-          ...data.data,
-          skills: data.data.skills.join(', '),
-        });
-      }
+      if (!response.ok) throw new Error('Unable to load this record');
+      const data = await response.json();
+      setForm({
+        ...data.data,
+        skills: data.data.skills.join(', '),
+      });
     } catch (err) {
       setError((err as Error).message);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (isEdit) {
+      fetchSkill();
+    }
+  }, [isEdit, fetchSkill]);
 
   const handleChange = (
     e: React.ChangeEvent<

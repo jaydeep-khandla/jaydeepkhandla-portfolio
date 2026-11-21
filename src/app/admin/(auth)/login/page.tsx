@@ -9,7 +9,7 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
@@ -21,9 +21,17 @@ export default function AdminLoginPage() {
       return;
     }
 
-    // Save token to localStorage
-    localStorage.setItem('adminToken', token);
-    router.push('/admin/dashboard');
+    try {
+      const response = await fetch('/api/admin/projects', {
+        headers: { Authorization: `Bearer ${token.trim()}` }, cache: 'no-store',
+      });
+      if (!response.ok) throw new Error(response.status === 401 ? 'Invalid admin token' : 'Unable to reach the admin API');
+      localStorage.setItem('adminToken', token.trim());
+      router.replace('/admin/dashboard');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Unable to log in');
+      setIsLoading(false);
+    }
   };
 
   return (

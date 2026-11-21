@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { Transition, motion } from "framer-motion";
+import { Transition, motion, useReducedMotion } from "framer-motion";
 
 const ballStyle = {
   display: "block",
@@ -18,11 +18,12 @@ const bounceTransition: Transition = {
 };
 
 export default function BouncingBall() {
+  const reduced = useReducedMotion();
   return (
     <motion.span
     style={ballStyle}
-    initial={{ x: -50 }}
-    animate={{ x: 50 }}
+    initial={false}
+    animate={reduced ? {} : { x: [-24,24] }}
     transition={bounceTransition}
   />
   );

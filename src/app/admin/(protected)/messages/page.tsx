@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface ContactMessage {
@@ -26,11 +26,7 @@ export default function AdminMessagesPage() {
   >('all');
   const router = useRouter();
 
-  useEffect(() => {
-    fetchMessages();
-  }, []);
-
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) {
@@ -55,7 +51,11 @@ export default function AdminMessagesPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    fetchMessages();
+  }, [fetchMessages]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this message?')) return;

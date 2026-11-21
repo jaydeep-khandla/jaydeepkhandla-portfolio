@@ -1,12 +1,13 @@
 'use client';
 import { useState } from 'react';
-import dynamic from 'next/dynamic';
-const HomeSection = dynamic(() => import('@/components/sections/HomeSection'));
-const Navbar = dynamic(() => import('@/components/ui/Navbar'));
+import PublicShell from '@/components/PublicShell';
+import HomeSection from '@/components/sections/HomeSection';
+import Navbar from '@/components/ui/Navbar';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
 import ContactSection from '@/components/sections/ContactSection';
+import ScrollToTop from '@/components/ui/ScrollToTop';
 import Footer from '@/components/ui/Footer';
 import ToastList from '@/components/ui/ToastList';
 
@@ -39,7 +40,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <PublicShell><main className="min-h-screen">
       <Navbar />
       <HomeSection />
       <ExperienceSection />
@@ -47,7 +48,8 @@ export default function Home() {
       <AboutSection />
       <ContactSection showToast={showToast} removeToast={removeToast} />
       <Footer />
+      <ScrollToTop />
       <ToastList data={toasts} position={position} removeToast={removeToast} />
-    </main>
+    </main></PublicShell>
   );
 }

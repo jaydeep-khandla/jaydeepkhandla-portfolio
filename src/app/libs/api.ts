@@ -1,5 +1,5 @@
 export const sendContactForm = async (data: Record<string, string>) => {
-  fetch('/api/contact', {
+  const response = await fetch('/api/contact', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -7,8 +7,7 @@ export const sendContactForm = async (data: Record<string, string>) => {
     },
     body: JSON.stringify(data),
     cache: 'no-store',
-  }).then((response) => {
-    if (!response.ok) throw new Error('Failed to send message');
-    return response.json();
   });
+  if (!response.ok) throw new Error('Failed to send message');
+  return await response.json();
 };

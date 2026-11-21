@@ -1,9 +1,11 @@
-import React from 'react';
-
-export default function SkillLabel({ skill }: { skill: string}) {
+"use client";
+import { useReveal } from "../useReveal";
+import { motion } from "framer-motion";
+export default function SkillLabel({ skill }: { skill: string }) {
+  const reveal = useReveal();
   return (
-    <span className='text-fira h-fit w-fit border-[1px] border-white rounded-3xl my-[0.0625rem] px-3 py-1 hover:bg-white hover:text-black text-sm'>
+    <motion.span {...reveal("pop")} className="chip">
       {skill}
-    </span>
+    </motion.span>
   );
 }

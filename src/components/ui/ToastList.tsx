@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { AnimatePresence } from 'framer-motion';
 import Toast from '../Toast';
 
 const ToastList = ({
@@ -11,30 +12,20 @@ const ToastList = ({
   position?: string;
   removeToast: Function;
 }) => {
-  const listRef = useRef(null);
-
-  const handleScrolling = (el: HTMLElement | null) => {
-    const isTopPosition = ['top-left', 'top-right'].includes(
-      position || 'top-right',
-    );
-    el?.scrollTo(0, el.scrollHeight);
-    if (isTopPosition) {
-    } else {
-      el?.scrollTo(0, 0);
-    }
-  };
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    handleScrolling(listRef.current);
+    const el = listRef.current;
+    if (el) el.scrollTo(0, position.startsWith('top') ? el.scrollHeight : 0);
   }, [position, data]);
 
   return (
-    data.length > 0 && (
-      <div
-        className="fixed p-[1em] w-full max-w-[400px] max-h-screen top-0 right-0 xl:top-2 overflow-x-hidden overflow-y-auto"
-        aria-live="assertive"
-        ref={listRef}
-      >
+    <div
+      className="toast-list fixed p-[1em] w-full max-w-[400px] max-h-screen top-0 right-0 xl:top-2 overflow-x-hidden overflow-y-auto"
+      aria-live="assertive"
+      ref={listRef}
+    >
+      <AnimatePresence initial={false}>
         {data.map((toast) => (
           <Toast
             key={toast.id}
@@ -42,8 +33,8 @@ const ToastList = ({
             onClose={() => removeToast(toast.id)}
           />
         ))}
-      </div>
-    )
+      </AnimatePresence>
+    </div>
   );
 };
 

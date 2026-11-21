@@ -1,6 +1,6 @@
 'use client';
+import RichContent from '@/components/RichContent';
 import React from 'react';
-import { motion } from 'framer-motion';
 import { PinContainer } from '@/components/ui/3d-pin';
 import SkillLabel from './ui/SkillLabel';
 import Image, { StaticImageData } from 'next/image';
@@ -25,50 +25,29 @@ export default function AnimatedPin({
   featured: boolean;
 }) {
   return (
-    <motion.div
-      className="h-[30rem] w-full flex items-center justify-center "
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: {
-          scale: 0,
-          opacity: 0,
-        },
-        visible: {
-          scale: 1,
-          opacity: 1,
-          transition: {
-            delay: 0.4,
-          },
-        },
-      }}
-    >
-      <PinContainer title={urlTitle} href={href}>
-        <div className="flex basis-full flex-col p-4 tracking-normal text-slate-100/50 sm:basis-1/2 w-[20rem] h-[25rem] ">
-          <h3 className="max-w-xs !pb-2 !m-0 font-fira font-bold text-2xl text-slate-100">
-            {title}
-          </h3>
-          <div className="text-base !m-0 !p-0 font-fira font-normal">
-            <span className=" text-zinc-300">{description}</span>
-          </div>
-          <div className="!m-0 !py-2">
-            <span className="flex flex-wrap gap-1 text-zinc-300">
-              {tech.map((t) => (
-                <SkillLabel key={t} skill={t} />
-              ))}
-            </span>
-          </div>
-          <div className="relative flex flex-1 w-full rounded-lg bg-zinc-700 overflow-hidden">
-            <Image
-              alt={imageAlt}
-              src={srcImg}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover"
-            />
-          </div>
+    <PinContainer title={urlTitle}>
+      <div className="preview">
+        {srcImg && (
+          <Image
+            src={srcImg}
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 860px) 100vw, 45vw"
+            className="object-cover"
+          />
+        )}
+      </div>
+      <div className="project-copy">
+        {featured && <p className="eyebrow">Featured</p>}
+        <h3>{title}</h3>
+        <RichContent value={description} />
+        <div className="chips">
+          {tech.map((t, index) => (
+            <SkillLabel key={index} skill={t} />
+          ))}
         </div>
-      </PinContainer>
-    </motion.div>
+        <a className="text-link project-destination" href={href} target="_blank" rel="noreferrer">{urlTitle} ↗</a>
+      </div>
+    </PinContainer>
   );
 }

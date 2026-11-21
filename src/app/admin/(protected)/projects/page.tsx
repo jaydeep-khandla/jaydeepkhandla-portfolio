@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import RichContent from '@/components/RichContent';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -20,11 +21,7 @@ export default function AdminProjectsPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) {
@@ -49,7 +46,11 @@ export default function AdminProjectsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this project?')) return;
@@ -117,7 +118,7 @@ export default function AdminProjectsPage() {
                 <h3 className="text-xl font-bold text-white mb-2">
                   {project.title}
                 </h3>
-                <p className="text-zinc-400 mb-3">{project.description}</p>
+                <RichContent value={project.description} />
                 <div className="flex flex-wrap gap-2 mb-3">
                   {project.tech.map((t, idx) => (
                     <span
@@ -133,7 +134,7 @@ export default function AdminProjectsPage() {
                   Order: {project.order}
                 </p>
               </div>
-              <div className="flex gap-2 ml-4">
+              <div className="project-actions flex gap-2 ml-4">
                 <Link
                   href={`/admin/projects/${project._id}`}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"

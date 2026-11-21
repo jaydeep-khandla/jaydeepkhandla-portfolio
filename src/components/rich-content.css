@@ -1,0 +1,20 @@
+.rich-content { min-width: 0; max-width: 100%; overflow-x: auto; overflow-wrap: anywhere; }
+.rich-content > * + * { margin-top: .65em; }
+.rich-content ul, .rich-content ol { padding-inline-start: 1.6em; list-style: revert; }
+.rich-content blockquote { padding-inline-start: 1em; border-inline-start: 3px solid #8cc84b; }
+.rich-content pre { white-space: pre-wrap; background: #101412; padding: .75em; border-radius: .35em; }
+.rich-content a { color: #8cc84b; text-decoration: underline; }
+.rich-content table { border-collapse: collapse; }
+.rich-content :is(td,th) { border: 1px solid #505a52; padding: .4em; min-width: 2em; }
+.rich-content img { max-width: 100%; height: auto; }
+.rich-content :is(h1,h2,h3,h4,h5,h6) { font-weight: 700; line-height: 1.25; }
+.rich-content h1 { font-size: 1.8em; }
+.rich-content h2 { font-size: 1.5em; }
+.rich-content h3 { font-size: 1.25em; }
+.editor-box { border: 1px solid #454e46; border-radius: .65rem; overflow: hidden; position: relative; }
+.editor-box:focus-within { border-color: #8cc84b; }
+.editor-tools { padding: .5rem; gap: .3rem; display: flex; flex-wrap: wrap; border-bottom: 1px solid #354038; }
+.editor-tools :is(button, select, input) { width: auto; font: inherit; font-size: .8rem; background: #181e1a; color: inherit; border: 1px solid #404a42; border-radius: .3rem; padding: .25rem .4rem; }
+.editor-tools button:is(:hover,[aria-pressed="true"]) { color: #a2d76c; border-color: currentColor; }
+.editor-tools input[type=color] { width: 2.3rem; height: 1.8rem; }
+.editor-box .tiptap { padding: 1rem; min-height: 9rem; outline: none; }
