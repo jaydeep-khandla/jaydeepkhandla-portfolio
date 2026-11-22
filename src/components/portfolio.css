@@ -131,7 +131,7 @@
   margin: 24px 0 14px;
 }
 .hero h1 em {
-  color: var(--accent);
+  color: var(--circuit);
   font-style: normal;
 }
 .availability {
@@ -587,3 +587,50 @@
 .pin-card { position: relative; }
 .project-destination::after { content: ''; position: absolute; inset: 0; }
 .project-copy .rich-content a, .project-copy .chips { position: relative; z-index: 1; }
+
+.hero { position: relative; isolation: isolate; }
+.hero-network {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  color: var(--accent);
+}
+.hero-network svg {
+  position: absolute;
+  inset: -3%;
+  width: 106%;
+  height: 106%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: .17;
+}
+.network-light {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  mask-image: radial-gradient(circle 180px at var(--network-x, 50%) var(--network-y, 65%), black, transparent);
+  transition: opacity .35s ease;
+}
+.network-light svg { opacity: .75; }
+.hero-network[data-active] .network-light { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-network svg { animation: network-swell 10s ease-in-out infinite alternate; }
+}
+@keyframes network-swell {
+  from { transform: translateY(-1.6%) skewY(-.6deg); }
+  to { transform: translateY(1.6%) skewY(.6deg); }
+}
+@media (max-width: 600px) {
+  .hero-network svg { width: 180%; left: -40%; }
+}
+
+.hero-network { color: var(--circuit); background: radial-gradient(ellipse at 62% 65%, rgb(65 126 56 / 12%), transparent 60%); }
+.hero-network > svg { opacity: .42; }
+.portfolio .primary { background: var(--circuit); border-color: var(--circuit); color: white; }
+@media (prefers-reduced-motion: no-preference) {
+  .bus-pulse { animation: route-packet 3s linear infinite; }
+}
+@keyframes route-packet { to { stroke-dashoffset: -100; } }

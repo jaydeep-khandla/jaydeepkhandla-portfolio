@@ -2,6 +2,7 @@
 import { useReveal } from "../useReveal";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import HeroNetwork from '../ui/HeroNetwork';
 import Header from "../ui/Header";
 import ProfileImg from "@/app/images/profile-square.png";
 import { availability } from "@/app/config/portfolio";
@@ -12,6 +13,7 @@ export default function HomeSection() {
   const command = "GET /api/projects";
   return (
     <section id="home" className="section split hero">
+      <HeroNetwork />
       <div>
         <motion.p {...reveal("rise")} className="availability">
           {availability}
@@ -64,50 +66,22 @@ export default function HomeSection() {
             transition={{ duration: reduced ? 0 : 0.8, repeat: reduced ? 0 : 7 }}
           />
         </div>
-        <svg
-          viewBox="0 0 440 135"
-          role="img"
-          aria-label="Request flow from client through API to MongoDB"
-        >
-          <defs><pattern id="terminal-grid" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="var(--muted)" opacity=".32" /></pattern></defs>
-          <rect width="440" height="135" fill="url(#terminal-grid)" />
-          {[126, 273].map((x) => (
-            <motion.path
-              key={x}
-              d={`M${x} 68h33l-5 -4m5 4l-5 4`}
-              fill="none"
-              stroke="var(--accent)"
-              initial={reduced ? false : { pathLength: 0 }}
-              viewport={{ once: true }}
-              whileInView={reduced ? undefined : { pathLength: 1 }}
-              transition={{ delay: 0.8, duration: 0.45 }}
-            />
+        <svg viewBox="0 43 420 201" role="img" aria-label="Example AWS architecture. Browser requests reach CloudFront, which serves assets from S3 or routes API requests through API Gateway and Lambda to MongoDB.">
+          {["M116 75H158", "M262 75H304", "M210 97V153", "M158 175H116", "M64 197v12q0 10 10 10h262q20 0 20-20v-2"].map((route, index) => (
+            <g key={route} fill="none">
+              <path d={route} stroke="var(--strong)" strokeWidth="3" />
+              <path className="bus-pulse" d={route} pathLength="100" stroke="var(--accent)" strokeWidth="2" strokeDasharray="9 91" style={{animationDelay: `${index * -.55}s`}} />
+            </g>
           ))}
-          {[126, 273].map((x, i) => <circle key={x} className="request-packet" cx={x} cy="68" r="2" fill="var(--accent)" style={{ animationDelay: `${i * 1.2}s` }} />)}
-          {["client", "API", "MongoDB"].map((label, i) => (
-            <motion.g
-              className="diagram-node" key={label}
-              initial={reduced ? false : { scale: .85 }}
-              viewport={{ once: true }}
-              whileInView={reduced ? undefined : { scale: 1 }}
-              transition={{ delay: 0.45 + i * 0.06, duration: 0.25 }}
-            >
-              <rect
-                x={17 + i * 146}
-                y="34"
-                width="102"
-                height="66"
-                rx="8"
-                fill={i === 1 ? "var(--accent-tint)" : "var(--surface)"}
-                stroke={i === 1 ? "var(--accent)" : "var(--strong)"}
-              />
-              <g transform={`translate(${59 + i * 146} 44)`} fill="none" stroke="var(--accent)" strokeWidth="1.3">
-                <path d={["M0 1h18v12H0z M0 5h18 M5 16h8", "M5 2L0 8l5 6 M13 2l5 6-5 6 M11 1L7 15", "M0 4c0-5 18-5 18 0s-18 5-18 0v9c0 5 18 5 18 0V4 M0 9c0 5 18 5 18 0"][i]} />
-              </g>
-              <text x={68 + i * 146} y="85" fill="currentColor" textAnchor="middle">
-                {label}
-              </text>
-            </motion.g>
+          {[
+            [12,53,"Browser","CLIENT"], [158,53,"CloudFront","EDGE"], [304,53,"S3","ASSETS"],
+            [158,153,"API Gateway","ROUTER"], [12,153,"Lambda","COMPUTE"], [304,153,"MongoDB","DATA"],
+          ].map(([x,y,label,kind]) => (
+            <g key={label} className="diagram-node" transform={`translate(${x} ${y})`}>
+              <rect width="104" height="44" rx="6" fill="var(--surface)" stroke="var(--strong)" />
+              <text x="9" y="15" fill="var(--accent)" fontSize="9" letterSpacing="1">{kind}</text>
+              <text x="9" y="33" fill="var(--ink)" fontSize="13">{label}</text>
+            </g>
           ))}
         </svg>
       </motion.div>

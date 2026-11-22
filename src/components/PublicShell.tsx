@@ -31,7 +31,7 @@ export default function PublicShell({ children }: { children: React.ReactNode })
             innerSize={8}
             outerSize={35}
             outerScale={1.35}
-            color="140,200,75"
+            color="65,126,56"
             clickables={["button", "a", "input", "textarea"]}
           />
         )}
